@@ -3,9 +3,6 @@ using SoulsFormats;
 
 /*
  * TODO
-    * implement partial/full installation
-        * PTDE: check if game is unpacked
-    * DSR FMG: copy to normal file -AND- _(2)/_ (2) files
     * partial installation: don't include non-event soapstone messages that have special effects (tarkus. is that it?)
  * TESTING
     * make sure FMG entries arent being duped anymore
@@ -73,7 +70,7 @@ namespace rando_script
 
         private void InstallFull()
         {
-            //todo: just 
+            //copy over files wholesale
             var localstr = "DATA\\PTDE";
             if (is_DSR)
             {
@@ -202,26 +199,9 @@ namespace rando_script
                 fmgBloodstainNew.Entries.RemoveAll(e => e.ID >= 20000 && e.ID <= 20999);
                 fmgBloodstainNew.Entries.AddRange(fmgBloodstainOld.Entries.FindAll(e => e.ID >= 20000 && e.ID <= 20999));
 
-                /*
-                //tutorial messages (8100-8103), (9000-9099)
-                if (fmgBloodstainOld.Entries.Find(e => e.ID == 8100).Text != fmgBloodstainNew.Entries.Find(e => e.ID == 8100).Text)
-                { 
-                    fmgBloodstainNew.Entries.AddRange(fmgBloodstainOld.Entries.FindAll(e => e.ID >= 8100 && e.ID <= 8103));
-                }
-                if (fmgBloodstainOld.Entries.Find(e => e.ID == 9000).Text != fmgBloodstainNew.Entries.Find(e => e.ID == 9000).Text)
-                {
-                    fmgBloodstainNew.Entries.AddRange(fmgBloodstainOld.Entries.FindAll(e => e.ID >= 9000 && e.ID <= 9099));
-                }
-                    //community messages (20000-20999)
-                if (fmgBloodstainOld.Entries.Find(e => e.ID == 20000).Text != fmgBloodstainNew.Entries.Find(e => e.ID == 20000).Text)
-                {
-                    fmgBloodstainNew.Entries.AddRange(fmgBloodstainOld.Entries.FindAll(e => e.ID >= 20000 && e.ID <= 20999));
-                }
-                */
-
                 bloodFile.Bytes = fmgBloodstainNew.Write();
 
-                if (is_DSR)
+                if (is_DSR && bloodFiles.Count > 1) //Make sure there's more than 1 bloodfile. Some mods might remove the dupe.
                 {
                     //copy to dupe FMG
                     bloodFiles[1].Bytes = bloodFiles[0].Bytes;
@@ -250,8 +230,6 @@ namespace rando_script
 
                 var msb_old = MSB1.Read(path);
                 var msb_new = MSB1.Read(msbPath_target);
-                if (msb_old == null || msb_new == null)
-                    throw new Exception("Could not find MSB map file");
 
                 //copy over stuff
                 List <MSB1.Region> newRegions = msb_old.Regions.Regions.FindAll(e => e.Name.Contains("message"));
