@@ -120,8 +120,8 @@ namespace rando_script
 
             foreach (string path in fmgList)
             {
-                FMG fmgBloodstainOld;
-                BinderFile bloodFile;
+                FMG? fmgBloodstainOld;
+                BinderFile? bloodFile;
                 List<BinderFile> bloodFiles = new(); //for DSR dupe fmgs
 
                 BND3? fmgBNDNew;
@@ -133,7 +133,7 @@ namespace rando_script
                     if (!CheckFileExists(fmgPath_old))
                         return;
                     var fmgBNDOld = BND3.Read(fmgPath_old);
-                    fmgBloodstainOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("Blood_writing_.fmg")).Bytes); //DSR bloodstain messages
+                    fmgBloodstainOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("Blood_writing_.fmg"))!.Bytes); //DSR bloodstain messages
                     //fmgEventOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("Event_text.fmg")).Bytes); //DSR event messages
 
                     fmgPath_new = path + "menu.msgbnd" + DCXstring;
@@ -151,14 +151,14 @@ namespace rando_script
                     if (!CheckFileExists(fmgPath_old))
                         return;
                     var fmgBNDOld = BND3.Read(fmgPath_old);
-                    fmgBloodstainOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("血文字.fmg")).Bytes); //PTDE bloodstain messages
+                    fmgBloodstainOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("血文字.fmg"))!.Bytes); //PTDE bloodstain messages
                     //fmgEventOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("イベントテキスト.fmg")).Bytes); //PTDE event messages
 
                     fmgPath_new = path + "menu.msgbnd" + DCXstring;
                     if (!CheckFileExists(fmgPath_new))
                         return;
                     fmgBNDNew = BND3.Read(fmgPath_new);
-                    bloodFile = fmgBNDNew.Files.Find(e => e.Name.Contains("血文字.fmg"));
+                    bloodFile = fmgBNDNew.Files.Find(e => e.Name.Contains("血文字.fmg"))!;
                     //eventFile = fmgBNDNew.Files.Find(e => e.Name.Contains("イベントテキスト.fmg"));
                 }
 
@@ -234,9 +234,9 @@ namespace rando_script
             #region MSB
             List<string> msbList_old = new();
             if (is_DSR)
-                Directory.GetFiles("DATA\\DSR\\Map\\MapStudio").ToList();
+                msbList_old = Directory.GetFiles("DATA\\DSR\\Map\\MapStudio").ToList();
             else
-                Directory.GetFiles("DATA\\PTDE\\Map\\MapStudio").ToList();
+                msbList_old = Directory.GetFiles("DATA\\PTDE\\Map\\MapStudio").ToList();
 
             //loop through MSBs
             foreach (string path in msbList_old)
