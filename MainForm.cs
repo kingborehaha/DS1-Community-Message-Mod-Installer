@@ -2,8 +2,6 @@
 using SoulsFormats;
 
 /*
- * TODO
-    * partial installation: don't include non-event soapstone messages that have special effects (tarkus. is that it?)
  * TESTING
     * make sure FMG entries arent being duped anymore
     * full version DSR
@@ -40,15 +38,18 @@ namespace rando_script
 
         private void b_install_Click(object sender, EventArgs e)
         {
+            bool success = false;
             if (cb_SimpleInstall.Checked)
-                InstallPartial();
+                success = InstallPartial();
             else
-                InstallFull();
+                success = InstallFull();
 
             GC.Collect();
-
-            System.Media.SystemSounds.Exclamation.Play(); //make noise
-            MessageBox.Show("All done!", "Finished", MessageBoxButtons.OK);
+            if (success == true)
+            {
+                System.Media.SystemSounds.Exclamation.Play(); //make noise
+                MessageBox.Show("All done!", "Finished", MessageBoxButtons.OK);
+            }
         }
 
         private bool CheckFileExists(string filePath)
@@ -68,7 +69,7 @@ namespace rando_script
             return true;
         }
 
-        private void InstallFull()
+        private bool InstallFull()
         {
             //copy over files wholesale
             var localstr = "DATA\\PTDE";
@@ -84,11 +85,12 @@ namespace rando_script
                 var targetPath = $"{installFolder}\\{path}";
                 targetPath = targetPath.Replace(localstr, "");
                 if (!CheckFileExists(targetPath))
-                    return;
+                    return false;
                 Create_Backup(targetPath);
                 File.Move(path, targetPath, true);
             }
 
+            return true;
             //non english FMGs
             /*
             if (cb_ModifyAllFMG.Checked)
@@ -103,7 +105,7 @@ namespace rando_script
             }
             */
         }
-        private void InstallPartial()
+        private bool InstallPartial()
         {
             //var result = MessageBox.Show("Mod compatibility Info", $"To work with other mods, this needs to be installed last.", MessageBoxButtons.OKCancel);
 
@@ -128,14 +130,14 @@ namespace rando_script
                     //DSR
                     var fmgPath_old = "DATA\\DSR\\msg\\ENGLISH\\menu.msgbnd.dcx";
                     if (!CheckFileExists(fmgPath_old))
-                        return;
+                        return false;
                     var fmgBNDOld = BND3.Read(fmgPath_old);
                     fmgBloodstainOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("Blood_writing_.fmg"))!.Bytes); //DSR bloodstain messages
                     //fmgEventOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("Event_text.fmg")).Bytes); //DSR event messages
 
                     fmgPath_new = path + "menu.msgbnd" + DCXstring;
                     if (!CheckFileExists(fmgPath_new))
-                        return;
+                        return false;
                     fmgBNDNew = BND3.Read(fmgPath_new);
                     bloodFiles = fmgBNDNew.Files.FindAll(e => e.Name.Contains("Blood_writing_.fmg"));
                     bloodFile = bloodFiles[0];
@@ -146,14 +148,14 @@ namespace rando_script
                     //PTDE
                     var fmgPath_old = "DATA\\PTDE\\msg\\ENGLISH\\menu.msgbnd";
                     if (!CheckFileExists(fmgPath_old))
-                        return;
+                        return false;
                     var fmgBNDOld = BND3.Read(fmgPath_old);
                     fmgBloodstainOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("血文字.fmg"))!.Bytes); //PTDE bloodstain messages
                     //fmgEventOld = FMG.Read(fmgBNDOld.Files.Find(e => e.Name.Contains("イベントテキスト.fmg")).Bytes); //PTDE event messages
 
                     fmgPath_new = path + "menu.msgbnd" + DCXstring;
                     if (!CheckFileExists(fmgPath_new))
-                        return;
+                        return false;
                     fmgBNDNew = BND3.Read(fmgPath_new);
                     bloodFile = fmgBNDNew.Files.Find(e => e.Name.Contains("血文字.fmg"))!;
                     //eventFile = fmgBNDNew.Files.Find(e => e.Name.Contains("イベントテキスト.fmg"));
@@ -180,14 +182,14 @@ namespace rando_script
                     MessageBox.Show("Community Message Mod already seems to be installed." +
                         "\nIf this is not the case, try restoring backups first. Otherwise, reinstall DS1.",
                         "Error", MessageBoxButtons.OK);
-                    return;
+                    return false;
                 }
                 else if (bloodstainDictNew.ContainsKey(20000))
                 {
                     MessageBox.Show("Targeted text files cannot be merged with. Message FMG ID 20000 is already occupied" +
                         "\nReport this error message and whichever mods you have installed so it can be fixed.",
                         "Mod Compatibility Error", MessageBoxButtons.OK);
-                    return;
+                    return false;
                 }
 
                 //tutorial messages (8100-8103), (9000-9099)
@@ -225,31 +227,39 @@ namespace rando_script
                 string msbPath_target = installFolder + "\\map\\MapStudio\\" + msbName;
 
                 if (!CheckFileExists(msbPath_target))
-                    return;
+                    return false;
                 Create_Backup(msbPath_target);
 
                 var msb_old = MSB1.Read(path);
                 var msb_new = MSB1.Read(msbPath_target);
 
                 //copy over stuff
-                List <MSB1.Region> newRegions = msb_old.Regions.Regions.FindAll(e => e.Name.Contains("message"));
+                List <MSB1.Region> newRegions = msb_old.Regions.Regions.FindAll(e => e.Name.Contains("message") && CheckBlacklist(e.Name));
                 foreach (MSB1.Region n in newRegions)
                 {
+                    msb_new.Regions.Regions.Add(n); //add to list
+
+                    /*
                     var check = msb_new.Regions.Regions.Find(e => e.Name == n.Name);
                     if (check == null)
                         msb_new.Regions.Regions.Add(n); //add to list
                     else
                         check = n; //update
+                    */
                 }
 
-                var newMessages = msb_old.Events.Messages.FindAll(e => e.Name.Contains("message"));
+                var newMessages = msb_old.Events.Messages.FindAll(e => e.Name.Contains("message") && CheckBlacklist(e.Name));
                 foreach (MSB1.Event.Message n in newMessages)
                 {
+                    msb_new.Events.Messages.Add(n); //add to list
+
+                    /*
                     var check = msb_new.Events.Messages.Find(e => e.Name == n.Name);
                     if (check == null)
                         msb_new.Events.Messages.Add(n); //add to list
                     else
                         check = n; //update
+                    */
                 }
 
                 /*
@@ -306,7 +316,27 @@ namespace rando_script
                 //done with an MSB
             }
             #endregion
-            
+
+            return true;
+        }
+
+        private bool CheckBlacklist(string name)
+        {
+            string[] blacklist = //list of `Message` messages that require EMEVD to work properly
+            {
+                "20015", //dark anor londo
+                "20166", //gwyn dead
+                "20204", //rhea dead
+                "20235", //tarkus event
+            };
+
+            foreach (var id in blacklist)
+            {
+                if (name.Contains(id))
+                    return false;
+            }
+
+            return true;
         }
 
         private void b_browse_Click(object sender, EventArgs e)
