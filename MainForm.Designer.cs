@@ -41,7 +41,8 @@
             // b_install
             // 
             this.b_install.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_install.Location = new System.Drawing.Point(276, 89);
+            this.b_install.Location = new System.Drawing.Point(295, 52);
+            this.b_install.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.b_install.Name = "b_install";
             this.b_install.Size = new System.Drawing.Size(75, 23);
             this.b_install.TabIndex = 0;
@@ -52,7 +53,8 @@
             // b_browse
             // 
             this.b_browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_browse.Location = new System.Drawing.Point(195, 89);
+            this.b_browse.Location = new System.Drawing.Point(213, 52);
+            this.b_browse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.b_browse.Name = "b_browse";
             this.b_browse.Size = new System.Drawing.Size(75, 23);
             this.b_browse.TabIndex = 1;
@@ -67,7 +69,8 @@
             // b_restoreBackups
             // 
             this.b_restoreBackups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.b_restoreBackups.Location = new System.Drawing.Point(12, 89);
+            this.b_restoreBackups.Location = new System.Drawing.Point(12, 52);
+            this.b_restoreBackups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.b_restoreBackups.Name = "b_restoreBackups";
             this.b_restoreBackups.Size = new System.Drawing.Size(79, 23);
             this.b_restoreBackups.TabIndex = 2;
@@ -77,9 +80,9 @@
             // 
             // cb_SimpleInstall
             // 
-            this.cb_SimpleInstall.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cb_SimpleInstall.AutoSize = true;
-            this.cb_SimpleInstall.Location = new System.Drawing.Point(12, 36);
+            this.cb_SimpleInstall.Location = new System.Drawing.Point(23, 12);
+            this.cb_SimpleInstall.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cb_SimpleInstall.Name = "cb_SimpleInstall";
             this.cb_SimpleInstall.Size = new System.Drawing.Size(265, 19);
             this.cb_SimpleInstall.TabIndex = 4;
@@ -88,11 +91,11 @@
             // 
             // b_SimpleInstallInfo
             // 
-            this.b_SimpleInstallInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.b_SimpleInstallInfo.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.b_SimpleInstallInfo.Location = new System.Drawing.Point(276, 34);
+            this.b_SimpleInstallInfo.Location = new System.Drawing.Point(288, 10);
+            this.b_SimpleInstallInfo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.b_SimpleInstallInfo.Name = "b_SimpleInstallInfo";
-            this.b_SimpleInstallInfo.Size = new System.Drawing.Size(39, 21);
+            this.b_SimpleInstallInfo.Size = new System.Drawing.Size(38, 21);
             this.b_SimpleInstallInfo.TabIndex = 5;
             this.b_SimpleInstallInfo.Text = "Info";
             this.b_SimpleInstallInfo.UseVisualStyleBackColor = true;
@@ -103,7 +106,8 @@
             this.cb_ModifyAllFMG.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cb_ModifyAllFMG.AutoSize = true;
             this.cb_ModifyAllFMG.Enabled = false;
-            this.cb_ModifyAllFMG.Location = new System.Drawing.Point(12, 61);
+            this.cb_ModifyAllFMG.Location = new System.Drawing.Point(66, 27);
+            this.cb_ModifyAllFMG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cb_ModifyAllFMG.Name = "cb_ModifyAllFMG";
             this.cb_ModifyAllFMG.Size = new System.Drawing.Size(183, 19);
             this.cb_ModifyAllFMG.TabIndex = 3;
@@ -115,7 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(363, 124);
+            this.ClientSize = new System.Drawing.Size(381, 87);
             this.Controls.Add(this.b_SimpleInstallInfo);
             this.Controls.Add(this.cb_SimpleInstall);
             this.Controls.Add(this.cb_ModifyAllFMG);
@@ -124,6 +128,7 @@
             this.Controls.Add(this.b_install);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainForm";
             this.Text = "DS1 Community Message Mod Installer";
             this.ResumeLayout(false);

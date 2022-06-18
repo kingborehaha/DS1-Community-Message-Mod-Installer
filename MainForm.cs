@@ -26,7 +26,7 @@ namespace rando_script
             InitializeComponent();
             b_install.Enabled = false;
             b_restoreBackups.Enabled = false;
-            Text += GetVersion();
+            //Text += GetVersion();
         }
 
         private static string GetVersion()

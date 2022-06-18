@@ -8,6 +8,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Guidance_Soapstone.ico</ApplicationIcon>
+    <Version />
   </PropertyGroup>
 
   <ItemGroup>
