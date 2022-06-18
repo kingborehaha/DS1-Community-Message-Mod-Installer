@@ -1,6 +1,6 @@
 # DS1 Community Message Mod Installer
 
-![image](https://user-images.githubusercontent.com/55667610/174417074-a714603c-8702-4ace-ab71-b48d302afc8a.png)
+![image](https://user-images.githubusercontent.com/55667610/174418101-d219f154-c67f-4edc-9b69-14b555e01e2a.png)
 
 Installs DS1 Community Message Mod for PTDE and DSR.
 
