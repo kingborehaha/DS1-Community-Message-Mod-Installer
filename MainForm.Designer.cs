@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.b_install = new System.Windows.Forms.Button();
             this.b_browse = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -121,8 +122,10 @@
             this.Controls.Add(this.b_restoreBackups);
             this.Controls.Add(this.b_browse);
             this.Controls.Add(this.b_install);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "DS1 Community Message Mod (DEBUG ALL INSTALL VERSION)";
+            this.Text = "DS1 Community Message Mod Installer";
             this.ResumeLayout(false);
             this.PerformLayout();
 
