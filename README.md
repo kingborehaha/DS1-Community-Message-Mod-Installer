@@ -23,10 +23,10 @@ Installs DS1 Community Message Mod for PTDE and DSR.
 [.NET 6.0 Desktop](https://download.visualstudio.microsoft.com/download/pr/f13d7b5c-608f-432b-b7ec-8fe84f4030a1/5e06998f9ce23c620b9d6bac2dae6c1d/windowsdesktop-runtime-6.0.4-win-x64.exe)
 
 ## Changelog
-* V1.1.1
-Fixed full installation only working once
-* v1.1.0
-Initial Release
+#### v1.1.1
+* Fixed full installation only working once
+#### v1.1.0
+* Initial Release
 
 ## Credits
 Uses https://github.com/JKAnderson/SoulsFormats and https://github.com/soulsmods/Paramdex
