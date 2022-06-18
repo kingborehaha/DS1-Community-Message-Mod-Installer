@@ -58,7 +58,7 @@ namespace rando_script
             {
                 if (is_DSR)
                     MessageBox.Show($"Could not find \"{filePath}\", DSR installation has been cancelled." +
-                        $"\nTry reinstalling the game.",
+                        $"\nTry reinstalling the mod/game.",
                         "Error", MessageBoxButtons.OK);
                 else
                     MessageBox.Show($"Could not find \"{filePath}\", PTDE installation has been cancelled." +
@@ -87,7 +87,7 @@ namespace rando_script
                 if (!CheckFileExists(targetPath))
                     return false;
                 Create_Backup(targetPath);
-                File.Move(path, targetPath, true);
+                File.Copy(path, targetPath, true);
             }
 
             return true;
